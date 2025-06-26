@@ -1,0 +1,47 @@
+  users
+  ┌───────────────┐
+  │ user_id (PK)  │
+  │ name          │
+  │ password      │
+  │ photo_url     │
+  └───────────────┘
+        ▲
+        │
+        │
+ ┌──────┴───────┐
+ │              │
+ ▼              ▼
+post         follow
+┌──────────────┐       ┌─────────────────────┐
+│ post_id (PK) │       │ follow_id (PK)      │
+│ user_id (FK) │◄─────▶│ follower_id (FK)    │
+│ date         │       │ followed_id (FK)    │
+│ content      │       │ date                │
+└──────────────┘       └─────────────────────┘
+      ▲
+      │
+      │
+ ┌────┴────┐
+ │         │
+ ▼         ▼
+image   comment
+┌──────────────┐     ┌─────────────────────────────┐
+│ image_id (PK)│     │ comment_id (PK)             │
+│ post_id (FK) │◄────│ post_id (FK)                │
+│ image_url    │     │ parent_comment_id (FK, NULL)│
+└──────────────┘     │ user_id (FK)                │
+                     │ date                        │
+                     │ content                     │
+                     └─────────────────────────────┘
+                             ▲
+                             │
+                        ┌────┴─────┐
+                        │          │
+                        ▼          ▼
+                    like_post   like_comment
+                   ┌──────────┐ ┌────────────────┐
+                   │ like_id  │ │ like_id        │
+                   │ post_id  │ │ comment_id     │
+                   │ user_id  │ │ user_id        │
+                   │ date     │ │ date           │
+                   └──────────┘ └────────────────┘
