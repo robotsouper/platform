@@ -23,7 +23,6 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
     content = db.Column(db.Text)
-    image_id = db.Column(db.Integer, db.ForeignKey('image.image_id'), nullable=True)
 
     comments = db.relationship('Comment', backref='post', lazy=True)
     likes = db.relationship('LikePost', backref='post', lazy=True)
