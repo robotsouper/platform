@@ -32,8 +32,6 @@ def get_all_comments(post_id):
         for c in comments
     ])
 
-
-# 🗑️ Delete a comment by ID
 @bp.route('/comments/<int:comment_id>', methods=['DELETE'])
 def delete_comment(comment_id):
     comment = Comment.query.get(comment_id)
