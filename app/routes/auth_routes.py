@@ -1,6 +1,8 @@
 from flask import Blueprint, request, jsonify
 from app import db
 from app.models import User
+from flask_jwt_extended import create_access_token
+from datetime import timedelta
 
 bp = Blueprint('auth_routes', __name__)
 
@@ -29,8 +31,13 @@ def login():
 
     user = User.query.filter_by(name=name, password=password).first()
     if user:
+        access_token = create_access_token(
+            identity=user.user_id,
+            expires_delta=timedelta(days=1)
+        )
         return jsonify({
             'message': 'Login successful',
+            'access_token': access_token,
             'user_id': user.user_id,
             'name': user.name,
             'photo_url': user.photo_url
