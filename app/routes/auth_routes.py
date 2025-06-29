@@ -3,6 +3,8 @@ from app import db
 from app.models import User
 from flask_jwt_extended import create_access_token
 from datetime import timedelta
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 bp = Blueprint('auth_routes', __name__)
 
@@ -16,21 +18,22 @@ def register():
     existing_user = User.query.filter_by(name=name).first()
     if existing_user:
         return jsonify({'error': 'Username already taken'}), 400
-
-    new_user = User(name=name, password=password, photo_url=photo_url)
+    
+    hashed_password = generate_password_hash(password)
+    new_user = User(name=name, password=hashed_password, photo_url=photo_url)
     db.session.add(new_user)
     db.session.commit()
     return jsonify({'message': 'User registered', 'user_id': new_user.user_id})
 
 
-@bp.route('/login', methods=['POST'])
+@bp.route('/login', methods=['POST'])   
 def login():
     data = request.json
     name = data.get('name')
     password = data.get('password')
 
-    user = User.query.filter_by(name=name, password=password).first()
-    if user:
+    user = User.query.filter_by(name=name).first()
+    if user and check_password_hash(user.password, password):
         access_token = create_access_token(
             identity=user.user_id,
             expires_delta=timedelta(days=1)
