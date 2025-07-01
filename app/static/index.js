@@ -21,11 +21,12 @@ function buildPostCard(post) {
   card.className = "card";
   card.innerHTML = `
     <div class="postHeader">
-      <div class="postUser">${post.user_id}</div>
+      <img src="${post.user_photo_url}" alt="profile" class="profilePhoto"/>
+      <div class="postUser">${post.username}</div>
       <div><em class="fas fa-ellipsis-h"></em></div>
     </div>
     <div class="postPic">
-      <img src="pic1.jpeg" alt="postPic"/>
+      <img src="${post.image_url}" alt="postPic"/>
     </div>
     <div class="postContent">
       <div class="icons">

@@ -6,7 +6,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 bp = Blueprint('like_routes', __name__)
 
 @bp.route('/like_post', methods=['POST'])
-@jwt_required()
+# @jwt_required()
 def like_post():
     data = request.json
     like = LikePost(post_id=data['post_id'], user_id= get_jwt_identity())
@@ -15,7 +15,7 @@ def like_post():
     return jsonify({'message': 'Post liked'})
 
 @bp.route('/like_comment', methods=['POST'])
-@jwt_required()
+# @jwt_required()
 def like_comment():
     data = request.json
     like = LikeComment(comment_id=data['comment_id'], user_id=get_jwt_identity())
@@ -24,7 +24,7 @@ def like_comment():
     return jsonify({'message': 'Comment liked'})
 
 @bp.route('/like_post', methods=['DELETE'])
-@jwt_required()
+# @jwt_required()
 def unlike_post():
     post_id = request.args.get('post_id')
     user_id = get_jwt_identity()
@@ -36,7 +36,7 @@ def unlike_post():
     return jsonify({'error': 'Like not found'}), 404
 
 @bp.route('/like_comment', methods=['DELETE'])
-@jwt_required()
+# @jwt_required()
 def unlike_comment():
     comment_id = request.args.get('comment_id')
     user_id = get_jwt_identity()

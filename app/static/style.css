@@ -193,9 +193,11 @@ nav * {
     padding-bottom: 20px;  */
 }
 
-.postPic img{
-    width: 100%;
-    height: auto;
+.postPic img {
+  max-width: 70%;     /* ensure it never exceeds container width */
+  height: auto;        /* keeps the aspect ratio */
+  display: block;      /* removes any extra spacing below image */
+  margin: 0 auto;      /* center the image */
 }
 
 .icons{
@@ -262,6 +264,13 @@ em {
 /* .addComment * {
     margin-right: 10px;
 } */
+.profilePhoto {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+}
 
 
 /* Mobile Phone Media Query */
