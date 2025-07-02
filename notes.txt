@@ -1,0 +1,11 @@
+Invoke-RestMethod -Uri "http://localhost:5000/posts" `
+  -Method POST `
+  -Body '{"content":"失恋了，有人出来喝酒吗？"}' `
+  -ContentType "application/json" `
+  -Headers @{ Authorization = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1MTQ1MTk0NywianRpIjoiZjE3MWFhYzEtNGM1OS00ZDJkLTk4MmQtMzk4ZDM3Njk4NmUxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzUxNDUxOTQ3LCJleHAiOjE3NTE1MzgzNDd9.PfgqO1MfQVsdg8vl3PwTtyGL3S2ZyVGrJUKgfOi-ZQQ" }
+
+
+Invoke-RestMethod -Uri "http://localhost:5000/login" `
+  -Method POST `
+  -Body '{"name":"小帅","password":"66666666"}' `
+  -ContentType "application/json"

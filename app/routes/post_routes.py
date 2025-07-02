@@ -5,8 +5,8 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 bp = Blueprint('post_routes', __name__)
-# @jwt_required()
 @bp.route('/posts', methods=['POST'])
+@jwt_required()
 def create_post():
     data = request.json
     user_id = get_jwt_identity()
@@ -45,7 +45,7 @@ def get_all_posts():
     ])
 
 @bp.route('/my_posts', methods=['GET'])
-# @jwt_required()
+@jwt_required()
 def get_my_posts():
     user_id = get_jwt_identity()
     posts = Post.query.filter_by(user_id=user_id).order_by(Post.date.desc()).all()
@@ -59,7 +59,7 @@ def get_my_posts():
     ])
 
 @bp.route('/posts/<int:post_id>', methods=['GET'])
-# @jwt_required()
+@jwt_required()
 def get_post(post_id):
     post = Post.query.get(post_id)
     user_id = get_jwt_identity()
@@ -73,7 +73,7 @@ def get_post(post_id):
 
   
 @bp.route('/posts/<int:post_id>', methods=['DELETE'])
-# @jwt_required()
+@jwt_required()
 def delete_post(post_id):
     user_id = get_jwt_identity()
     post = Post.query.get(post_id)

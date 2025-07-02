@@ -23,12 +23,16 @@ function buildPostCard(post) {
     <div class="postHeader">
       <img src="${post.user_photo_url}" alt="profile" class="profilePhoto"/>
       <div class="postUser">${post.username}</div>
-      <div><em class="fas fa-ellipsis-h"></em></div>
     </div>
-    <div class="postPic">
-      <img src="${post.image_url}" alt="postPic"/>
-    </div>
+    ${post.image_url ? `
+      <div class="postPic">
+        <img src="${post.image_url}" alt="postPic"/>
+      </div>
+    ` : ''}
     <div class="postContent">
+      <div class="realContent">
+        <p>${post.content}</p>
+      </div>      
       <div class="icons">
         <div class="threeIcons">
           <em class="far fa-heart" data-postid="${post.post_id}"></em>
@@ -36,11 +40,6 @@ function buildPostCard(post) {
           <em class="far fa-paper-plane"></em>
         </div>
         <div><em class="far fa-bookmark"></em></div>
-      </div>
-      <p class="likes" id="likeCount-${post.post_id}"><strong>0 Likes</strong></p>
-      <div class="realContent">
-        <p class="postUser"><strong>${post.user_id}</strong></p>
-        <p>${post.content}</p>
       </div>
       <div class="comments" id="comments-${post.post_id}"></div>
       <div class="addCommentSection">
