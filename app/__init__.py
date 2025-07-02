@@ -27,5 +27,8 @@ def create_app(config_class='config.Config'):
     def home():
         return render_template("index.html")
 
-
+    @app.route("/login.html")
+    def login_page():
+        return render_template("login.html")
+    
     return app

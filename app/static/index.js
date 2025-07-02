@@ -1,5 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-  loadPosts();
+  const userName = localStorage.getItem("userName");
+  if (userName) {
+    document.getElementById("username").textContent = userName;
+  }
+  const signoutLink = document.getElementById("signout");
+  signoutLink.addEventListener("click", () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userId");
+    window.location.href = "/login.html";
+  });
+
+  loadPosts(); 
 });
 
 function loadPosts() {
