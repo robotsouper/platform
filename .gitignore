@@ -1,5 +1,5 @@
-    venv/
-    mytest/
-    app/static/photos/
-    notes.txt
-    /app/config.py
+venv/
+mytest/
+app/static/photos/
+notes.txt
+/app/config.py
