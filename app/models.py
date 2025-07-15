@@ -63,3 +63,4 @@ class LikeComment(db.Model):
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
     __table_args__ = (db.UniqueConstraint('comment_id', 'user_id', name='unique_comment_like'),)
+

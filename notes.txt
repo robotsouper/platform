@@ -1,11 +1,22 @@
-Invoke-RestMethod -Uri "http://localhost:5000/posts" `
-  -Method POST `
-  -Body '{"content":"失恋了，有人出来喝酒吗？"}' `
-  -ContentType "application/json" `
-  -Headers @{ Authorization = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1MTQ1MTk0NywianRpIjoiZjE3MWFhYzEtNGM1OS00ZDJkLTk4MmQtMzk4ZDM3Njk4NmUxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzUxNDUxOTQ3LCJleHAiOjE3NTE1MzgzNDd9.PfgqO1MfQVsdg8vl3PwTtyGL3S2ZyVGrJUKgfOi-ZQQ" }
+  Invoke-RestMethod -Uri "http://localhost:5000/posts" `
+    -Method POST `
+    -Body '{"content":"失恋了，有人出来喝酒吗？"}' `
+    -ContentType "application/json" `
+    -Headers @{ Authorization = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1MTQ1MTk0NywianRpIjoiZjE3MWFhYzEtNGM1OS00ZDJkLTk4MmQtMzk4ZDM3Njk4NmUxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzUxNDUxOTQ3LCJleHAiOjE3NTE1MzgzNDd9.PfgqO1MfQVsdg8vl3PwTtyGL3S2ZyVGrJUKgfOi-ZQQ" }
 
 
 Invoke-RestMethod -Uri "http://localhost:5000/login" `
   -Method POST `
   -Body '{"name":"小帅","password":"66666666"}' `
   -ContentType "application/json"
+
+curl.exe -X POST http://localhost:5000/comments `
+  -H "Content-Type: application/json" `
+  -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1MjYwNzU5OSwianRpIjoiYzdlODZmZWUtZmQ0ZS00YTZjLWI4MDAtY2IyOWE2ZjZjOGQxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzUyNjA3NTk5LCJleHAiOjE3NTI2OTM5OTl9.xffK5BLXxmJ6Mju3-qZsJbvbC1OhN6x-huxn8Q4jvVQ" `
+  -d '{ "post_id": 2, "user_id": 1, "content": "别难过，我请你喝！🍻" }'
+
+curl.exe -X POST http://localhost:5000/login `
+  -H "Content-Type: application/json" `
+  -d '{ "name": "小帅", "password": "66666666" }'
+
+curl http://localhost:5000/comments/2

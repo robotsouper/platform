@@ -73,7 +73,8 @@ function loadComments(postId) {
       const commentsContainer = document.getElementById(`comments-${postId}`);
       commentsContainer.innerHTML = comments.map(c => `
         <div class="comment">
-          <p class="postUser"><strong>${c.user_id}</strong></p>
+          <img src="${c.user_photo_url}" class="profilePhoto" />
+          <p class="postUser"><strong>${c.username}</strong></p>
           <p>${c.content}</p>
         </div>
       `).join("");

@@ -6,7 +6,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 bp = Blueprint('comment_routes', __name__)
 
 @bp.route('/comments', methods=['POST'])
-# @jwt_required()
+@jwt_required()
 def add_comment():
     data = request.json
     user_id = get_jwt_identity()
@@ -22,13 +22,14 @@ def add_comment():
     return jsonify({'message': 'Comment added', 'comment_id': comment.comment_id})
 
 @bp.route('/comments/<int:post_id>', methods=['GET'])
-# @jwt_required()
 def get_all_comments(post_id):
     comments = Comment.query.filter_by(post_id=post_id).order_by(Comment.date.asc()).all()
     return jsonify([
         {
             'comment_id': c.comment_id,
             'user_id': c.user_id,
+            'username': c.author.name,           
+            'user_photo_url': c.author.photo_url, 
             'parent_comment_id': c.parent_comment_id,
             'content': c.content,
             'date': c.date.isoformat()
@@ -37,7 +38,7 @@ def get_all_comments(post_id):
     ])
 
 @bp.route('/comments/<int:comment_id>', methods=['DELETE'])
-# @jwt_required()
+@jwt_required()
 def delete_comment(comment_id):
     user_id = get_jwt_identity()
     comment = Comment.query.get(comment_id)
