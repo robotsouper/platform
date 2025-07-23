@@ -3,15 +3,14 @@ document.addEventListener("DOMContentLoaded", () => {
   if (userName) {
     document.getElementById("username").textContent = userName;
   }
+
   const signoutLink = document.getElementById("signout");
   signoutLink.addEventListener("click", () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userName");
-    localStorage.removeItem("userId");
+    localStorage.clear();
     window.location.href = "/login.html";
   });
 
-  loadPosts(); 
+  loadPosts();
 });
 
 function loadPosts() {
@@ -70,15 +69,64 @@ function loadComments(postId) {
   fetch(`/comments/${postId}`)
     .then(res => res.json())
     .then(comments => {
+      const currentUserId = parseInt(localStorage.getItem("userId"));
       const commentsContainer = document.getElementById(`comments-${postId}`);
-      commentsContainer.innerHTML = comments.map(c => `
-        <div class="comment">
-          <img src="${c.user_photo_url}" class="profilePhoto" />
-          <p class="postUser"><strong>${c.username}</strong></p>
+      commentsContainer.innerHTML = "";
+
+      comments.forEach(c => {
+        const commentEl = document.createElement("div");
+        commentEl.className = "comment";
+        commentEl.innerHTML = `
+          <p class="postUser"><strong>${c.user_id}</strong></p>
           <p>${c.content}</p>
-        </div>
-      `).join("");
+        `;
+
+        if (c.user_id === currentUserId) {
+          commentEl.addEventListener("contextmenu", e => {
+            e.preventDefault();
+            showDeletePopup(e.pageX, e.pageY, c.comment_id, postId);
+          });
+        }
+
+        commentsContainer.appendChild(commentEl);
+      });
     });
+}
+
+function showDeletePopup(x, y, commentId, postId) {
+  const existing = document.querySelector(".delete-popup");
+  if (existing) existing.remove();
+
+  const popup = document.createElement("div");
+  popup.textContent = "Delete";
+  popup.className = "delete-popup";
+  popup.style.position = "absolute";
+  popup.style.top = `${y}px`;
+  popup.style.left = `${x}px`;
+  popup.style.background = "#fff";
+  popup.style.border = "1px solid #ccc";
+  popup.style.padding = "5px 10px";
+  popup.style.cursor = "pointer";
+  popup.style.zIndex = 1000;
+
+  popup.onclick = () => {
+    const token = localStorage.getItem("token");
+    fetch(`/comments/${commentId}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    })
+    .then(res => res.json())
+    .then(() => {
+      popup.remove();
+      loadComments(postId);
+    })
+    .catch(err => alert(err.message));
+  };
+
+  document.body.appendChild(popup);
+  document.addEventListener("click", () => popup.remove(), { once: true });
 }
 
 function addComment(postId) {
@@ -86,12 +134,13 @@ function addComment(postId) {
   const content = input.value.trim();
   if (!content) return;
 
+  const userId = parseInt(localStorage.getItem("userId"));
   fetch("/comments", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       post_id: postId,
-      user_id: 1,  // static user id for testing, replace with actual user id after auth
+      user_id: userId,
       content: content
     })
   })
@@ -106,23 +155,22 @@ document.addEventListener("click", e => {
   if (e.target.classList.contains("fa-heart")) {
     const postId = e.target.dataset.postid;
     const isLiked = e.target.classList.contains("fas");
+    const userId = parseInt(localStorage.getItem("userId"));
 
     if (!isLiked) {
-      // like
       fetch("/like_post", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           post_id: postId,
-          user_id: 1  // static user id for testing
+          user_id: userId
         })
       }).then(() => {
         e.target.classList.remove("far");
         e.target.classList.add("fas");
       });
     } else {
-      // unlike
-      fetch(`/like_post?post_id=${postId}&user_id=1`, {
+      fetch(`/like_post?post_id=${postId}&user_id=${userId}`, {
         method: "DELETE"
       }).then(() => {
         e.target.classList.remove("fas");

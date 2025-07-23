@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from app import db
 from app.models import Comment
 from flask_jwt_extended import jwt_required, get_jwt_identity
+import logging
 
 bp = Blueprint('comment_routes', __name__)
 
@@ -48,4 +49,5 @@ def delete_comment(comment_id):
         return jsonify({'error': 'Unauthorized'}), 403
     db.session.delete(comment)
     db.session.commit()
+    logging.info(f"User {user_id} deleted comment {comment_id}")
     return jsonify({'message': 'Comment deleted'})

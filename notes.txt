@@ -12,11 +12,11 @@ Invoke-RestMethod -Uri "http://localhost:5000/login" `
 
 curl.exe -X POST http://localhost:5000/comments `
   -H "Content-Type: application/json" `
-  -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1MjYwNzU5OSwianRpIjoiYzdlODZmZWUtZmQ0ZS00YTZjLWI4MDAtY2IyOWE2ZjZjOGQxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzUyNjA3NTk5LCJleHAiOjE3NTI2OTM5OTl9.xffK5BLXxmJ6Mju3-qZsJbvbC1OhN6x-huxn8Q4jvVQ" `
-  -d '{ "post_id": 2, "user_id": 1, "content": "别难过，我请你喝！🍻" }'
+  -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1MzI4MTMxNiwianRpIjoiYzI3NjFkMDktZDg0YS00ZGIzLWJkMGYtNTFkYmE2NGI4NDYwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MywibmJmIjoxNzUzMjgxMzE2LCJleHAiOjE3NTMzNjc3MTZ9.J8a4bhGA4qHttKDXu29il7gpreIaGX9M58IM31yFB0M" `
+  -d '{ "post_id": 2, "user_id": 3, "content": "别难过，我请你喝！🍻" }'
 
 curl.exe -X POST http://localhost:5000/login `
   -H "Content-Type: application/json" `
-  -d '{ "name": "小帅", "password": "66666666" }'
+  -d '{ "name": "小丑", "password": "77777777" }'
 
 curl http://localhost:5000/comments/2
