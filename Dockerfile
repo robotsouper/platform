@@ -11,7 +11,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
-    && apt-get clean
+    && apt-get clean    
 
 # Copy requirements and install
 COPY requirements.txt /app/
